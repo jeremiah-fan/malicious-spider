@@ -1,0 +1,14 @@
+a.exe
+b.exe
+c.exe
+q.exe
+www.attacker.com
+www.google.com
+
+m0007 c.exe www.attacker.com
+m0109 c.exe b.exe
+m0562 a.exe b.exe
+m0562 c.exe www.attacker.com
+m1174 q.exe www.attacker.com
+m3455 c.exe www.google.com
+m3455 www.google.com a.exe

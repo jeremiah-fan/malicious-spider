@@ -1,0 +1,2 @@
+a.exe
+www.rare-malicious-website.com

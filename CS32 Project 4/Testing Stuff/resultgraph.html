@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Malicious entity graph</title>
+<meta charset="utf-8">
+<style>
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+#defaultedge {
+  fill: blue;
+}
+
+.link.defaultedge {
+  stroke: blue;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+</style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script>
+
+var nodes = { };
+nodes["a.exe (m0)"] = {name: "a.exe (m0)", color: "red"};
+nodes["a.exe (m11)"] = {name: "a.exe (m11)", color: "red"};
+nodes["a.exe (m20)"] = {name: "a.exe (m20)", color: "red"};
+nodes["a.exe (m24)"] = {name: "a.exe (m24)", color: "red"};
+nodes["a.exe (m28)"] = {name: "a.exe (m28)", color: "red"};
+nodes["axxt.exe (m17)"] = {name: "axxt.exe (m17)", color: "red"};
+nodes["be.exe (m1)"] = {name: "be.exe (m1)", color: "green"};
+nodes["bns.exe (m14)"] = {name: "bns.exe (m14)", color: "green"};
+nodes["ch.exe (m26)"] = {name: "ch.exe (m26)", color: "green"};
+nodes["ckq.exe (m15)"] = {name: "ckq.exe (m15)", color: "red"};
+nodes["ckq.exe (m19)"] = {name: "ckq.exe (m19)", color: "red"};
+nodes["ckq.exe (m24)"] = {name: "ckq.exe (m24)", color: "red"};
+nodes["d.exe (m6)"] = {name: "d.exe (m6)", color: "green"};
+nodes["daiw.exe (m28)"] = {name: "daiw.exe (m28)", color: "red"};
+nodes["djni.exe (m13)"] = {name: "djni.exe (m13)", color: "red"};
+nodes["ds.exe (m23)"] = {name: "ds.exe (m23)", color: "green"};
+nodes["eci.exe (m21)"] = {name: "eci.exe (m21)", color: "green"};
+nodes["env.exe (m13)"] = {name: "env.exe (m13)", color: "green"};
+nodes["f.exe (m11)"] = {name: "f.exe (m11)", color: "red"};
+nodes["f.exe (m12)"] = {name: "f.exe (m12)", color: "red"};
+nodes["f.exe (m13)"] = {name: "f.exe (m13)", color: "red"};
+nodes["f.exe (m17)"] = {name: "f.exe (m17)", color: "red"};
+nodes["f.exe (m9)"] = {name: "f.exe (m9)", color: "red"};
+nodes["ftvd.exe (m13)"] = {name: "ftvd.exe (m13)", color: "red"};
+nodes["fv.exe (m0)"] = {name: "fv.exe (m0)", color: "green"};
+nodes["g.exe (m15)"] = {name: "g.exe (m15)", color: "green"};
+nodes["gty.exe (m0)"] = {name: "gty.exe (m0)", color: "red"};
+nodes["gty.exe (m14)"] = {name: "gty.exe (m14)", color: "red"};
+nodes["gty.exe (m17)"] = {name: "gty.exe (m17)", color: "red"};
+nodes["gty.exe (m19)"] = {name: "gty.exe (m19)", color: "red"};
+nodes["h.exe (m24)"] = {name: "h.exe (m24)", color: "green"};
+nodes["hi.exe (m11)"] = {name: "hi.exe (m11)", color: "green"};
+nodes["hrdy.exe (m18)"] = {name: "hrdy.exe (m18)", color: "red"};
+nodes["http://alipay.com/s/"] = {name: "http://alipay.com/s/", color: "orange"};
+nodes["http://behance.net/uzi/"] = {name: "http://behance.net/uzi/", color: "orange"};
+nodes["http://ce.cn/gc/"] = {name: "http://ce.cn/gc/", color: "orange"};
+nodes["http://change.org/tw/"] = {name: "http://change.org/tw/", color: "orange"};
+nodes["http://drom.ru/ka/"] = {name: "http://drom.ru/ka/", color: "orange"};
+nodes["http://ebates.com/gl/mntl/d/"] = {name: "http://ebates.com/gl/mntl/d/", color: "orange"};
+nodes["http://enet.com.cn/qni/"] = {name: "http://enet.com.cn/qni/", color: "orange"};
+nodes["http://ensonhaber.com/uou/k/"] = {name: "http://ensonhaber.com/uou/k/", color: "orange"};
+nodes["http://etao.com/dvk/e/"] = {name: "http://etao.com/dvk/e/", color: "orange"};
+nodes["http://globososo.com/czfc/zfmi/"] = {name: "http://globososo.com/czfc/zfmi/", color: "orange"};
+nodes["http://google.co.id/x/"] = {name: "http://google.co.id/x/", color: "orange"};
+nodes["http://google.com.ng/jjpi/"] = {name: "http://google.com.ng/jjpi/", color: "orange"};
+nodes["http://google.hu/rd/vcm/xx/"] = {name: "http://google.hu/rd/vcm/xx/", color: "orange"};
+nodes["http://loading-delivery1.com/abf/xs/khgc/k/t/"] = {name: "http://loading-delivery1.com/abf/xs/khgc/k/t/", color: "orange"};
+nodes["http://media.tumblr.com/sf/"] = {name: "http://media.tumblr.com/sf/", color: "orange"};
+nodes["http://mozilla.org/yib/nep/"] = {name: "http://mozilla.org/yib/nep/", color: "orange"};
+nodes["http://npr.org/y/"] = {name: "http://npr.org/y/", color: "orange"};
+nodes["http://offpageads.com/nvty/"] = {name: "http://offpageads.com/nvty/", color: "orange"};
+nodes["http://outbrain.com/qz/"] = {name: "http://outbrain.com/qz/", color: "orange"};
+nodes["http://reverso.net/j/gwi/"] = {name: "http://reverso.net/j/gwi/", color: "orange"};
+nodes["http://ria.ru/kycr/"] = {name: "http://ria.ru/kycr/", color: "orange"};
+nodes["http://sbnation.com/cisl/"] = {name: "http://sbnation.com/cisl/", color: "orange"};
+nodes["http://snapdeal.com/x/tr/"] = {name: "http://snapdeal.com/x/tr/", color: "orange"};
+nodes["http://soso.com/rh/"] = {name: "http://soso.com/rh/", color: "orange"};
+nodes["http://soundcloud.com/pc/"] = {name: "http://soundcloud.com/pc/", color: "orange"};
+nodes["http://taboola.com/xas/"] = {name: "http://taboola.com/xas/", color: "orange"};
+nodes["http://tianya.cn/sjf/"] = {name: "http://tianya.cn/sjf/", color: "orange"};
+nodes["http://wikiwiki.jp/uecv/qm/"] = {name: "http://wikiwiki.jp/uecv/qm/", color: "orange"};
+nodes["http://xbox.com/kn/"] = {name: "http://xbox.com/kn/", color: "orange"};
+nodes["http://xda-developers.com/imuv/l/z/"] = {name: "http://xda-developers.com/imuv/l/z/", color: "orange"};
+nodes["http://xywy.com/a/lpv/buoz/"] = {name: "http://xywy.com/a/lpv/buoz/", color: "orange"};
+nodes["http://youm7.com/oboa/bafe/rt/"] = {name: "http://youm7.com/oboa/bafe/rt/", color: "orange"};
+nodes["http://youporn.com/y/"] = {name: "http://youporn.com/y/", color: "orange"};
+nodes["i.exe (m14)"] = {name: "i.exe (m14)", color: "green"};
+nodes["i.exe (m23)"] = {name: "i.exe (m23)", color: "green"};
+nodes["iccz.exe (m17)"] = {name: "iccz.exe (m17)", color: "red"};
+nodes["icsm.exe (m17)"] = {name: "icsm.exe (m17)", color: "red"};
+nodes["ip.exe (m12)"] = {name: "ip.exe (m12)", color: "green"};
+nodes["ip.exe (m24)"] = {name: "ip.exe (m24)", color: "green"};
+nodes["irp.exe (m13)"] = {name: "irp.exe (m13)", color: "red"};
+nodes["irp.exe (m20)"] = {name: "irp.exe (m20)", color: "red"};
+nodes["irp.exe (m23)"] = {name: "irp.exe (m23)", color: "red"};
+nodes["jc.exe (m17)"] = {name: "jc.exe (m17)", color: "green"};
+nodes["juu.exe (m0)"] = {name: "juu.exe (m0)", color: "red"};
+nodes["juu.exe (m1)"] = {name: "juu.exe (m1)", color: "red"};
+nodes["juu.exe (m12)"] = {name: "juu.exe (m12)", color: "red"};
+nodes["juu.exe (m24)"] = {name: "juu.exe (m24)", color: "red"};
+nodes["juu.exe (m5)"] = {name: "juu.exe (m5)", color: "red"};
+nodes["k.exe (m13)"] = {name: "k.exe (m13)", color: "green"};
+nodes["kk.exe (m19)"] = {name: "kk.exe (m19)", color: "green"};
+nodes["km.exe (m9)"] = {name: "km.exe (m9)", color: "green"};
+nodes["knc.exe (m24)"] = {name: "knc.exe (m24)", color: "green"};
+nodes["l.exe (m11)"] = {name: "l.exe (m11)", color: "green"};
+nodes["ll.exe (m19)"] = {name: "ll.exe (m19)", color: "green"};
+nodes["lt.exe (m15)"] = {name: "lt.exe (m15)", color: "green"};
+nodes["mon.exe (m9)"] = {name: "mon.exe (m9)", color: "green"};
+nodes["mor.exe (m0)"] = {name: "mor.exe (m0)", color: "red"};
+nodes["mor.exe (m11)"] = {name: "mor.exe (m11)", color: "red"};
+nodes["mor.exe (m14)"] = {name: "mor.exe (m14)", color: "red"};
+nodes["mor.exe (m6)"] = {name: "mor.exe (m6)", color: "red"};
+nodes["nr.exe (m23)"] = {name: "nr.exe (m23)", color: "green"};
+nodes["nywm.exe (m9)"] = {name: "nywm.exe (m9)", color: "red"};
+nodes["o.exe (m14)"] = {name: "o.exe (m14)", color: "red"};
+nodes["o.exe (m18)"] = {name: "o.exe (m18)", color: "red"};
+nodes["o.exe (m24)"] = {name: "o.exe (m24)", color: "red"};
+nodes["o.exe (m28)"] = {name: "o.exe (m28)", color: "red"};
+nodes["o.exe (m3)"] = {name: "o.exe (m3)", color: "red"};
+nodes["o.exe (m9)"] = {name: "o.exe (m9)", color: "red"};
+nodes["omv.exe (m11)"] = {name: "omv.exe (m11)", color: "red"};
+nodes["omv.exe (m14)"] = {name: "omv.exe (m14)", color: "red"};
+nodes["omv.exe (m17)"] = {name: "omv.exe (m17)", color: "red"};
+nodes["omv.exe (m23)"] = {name: "omv.exe (m23)", color: "red"};
+nodes["omv.exe (m24)"] = {name: "omv.exe (m24)", color: "red"};
+nodes["omv.exe (m26)"] = {name: "omv.exe (m26)", color: "red"};
+nodes["orw.exe (m7)"] = {name: "orw.exe (m7)", color: "green"};
+nodes["p.exe (m11)"] = {name: "p.exe (m11)", color: "green"};
+nodes["p.exe (m13)"] = {name: "p.exe (m13)", color: "green"};
+nodes["p.exe (m21)"] = {name: "p.exe (m21)", color: "green"};
+nodes["pab.exe (m28)"] = {name: "pab.exe (m28)", color: "green"};
+nodes["pe.exe (m23)"] = {name: "pe.exe (m23)", color: "green"};
+nodes["po.exe (m23)"] = {name: "po.exe (m23)", color: "green"};
+nodes["pv.exe (m0)"] = {name: "pv.exe (m0)", color: "green"};
+nodes["q.exe (m16)"] = {name: "q.exe (m16)", color: "green"};
+nodes["q.exe (m6)"] = {name: "q.exe (m6)", color: "green"};
+nodes["qnf.exe (m17)"] = {name: "qnf.exe (m17)", color: "red"};
+nodes["qnf.exe (m18)"] = {name: "qnf.exe (m18)", color: "red"};
+nodes["qnf.exe (m19)"] = {name: "qnf.exe (m19)", color: "red"};
+nodes["qnf.exe (m20)"] = {name: "qnf.exe (m20)", color: "red"};
+nodes["qpxa.exe (m28)"] = {name: "qpxa.exe (m28)", color: "red"};
+nodes["qqna.exe (m18)"] = {name: "qqna.exe (m18)", color: "red"};
+nodes["qy.exe (m13)"] = {name: "qy.exe (m13)", color: "green"};
+nodes["rd.exe (m1)"] = {name: "rd.exe (m1)", color: "green"};
+nodes["sgxd.exe (m20)"] = {name: "sgxd.exe (m20)", color: "red"};
+nodes["sqv.exe (m17)"] = {name: "sqv.exe (m17)", color: "green"};
+nodes["tem.exe (m28)"] = {name: "tem.exe (m28)", color: "green"};
+nodes["tmft.exe (m19)"] = {name: "tmft.exe (m19)", color: "red"};
+nodes["ugge.exe (m11)"] = {name: "ugge.exe (m11)", color: "red"};
+nodes["uile.exe (m17)"] = {name: "uile.exe (m17)", color: "red"};
+nodes["uile.exe (m9)"] = {name: "uile.exe (m9)", color: "red"};
+nodes["vl.exe (m9)"] = {name: "vl.exe (m9)", color: "green"};
+nodes["vp.exe (m0)"] = {name: "vp.exe (m0)", color: "green"};
+nodes["wlhb.exe (m13)"] = {name: "wlhb.exe (m13)", color: "red"};
+nodes["wwz.exe (m16)"] = {name: "wwz.exe (m16)", color: "red"};
+nodes["wwz.exe (m18)"] = {name: "wwz.exe (m18)", color: "red"};
+nodes["wwz.exe (m21)"] = {name: "wwz.exe (m21)", color: "red"};
+nodes["wwz.exe (m23)"] = {name: "wwz.exe (m23)", color: "red"};
+nodes["wwz.exe (m7)"] = {name: "wwz.exe (m7)", color: "red"};
+nodes["wylt.exe (m14)"] = {name: "wylt.exe (m14)", color: "red"};
+nodes["x.exe (m13)"] = {name: "x.exe (m13)", color: "green"};
+nodes["x.exe (m21)"] = {name: "x.exe (m21)", color: "green"};
+nodes["xfxo.exe (m18)"] = {name: "xfxo.exe (m18)", color: "red"};
+
+var links = [
+{source: nodes["a.exe (m0)"], target: nodes["http://tianya.cn/sjf/"], type: "defaultedge"},
+{source: nodes["a.exe (m0)"], target: nodes["http://wikiwiki.jp/uecv/qm/"], type: "defaultedge"},
+{source: nodes["fv.exe (m0)"], target: nodes["mor.exe (m0)"], type: "defaultedge"},
+{source: nodes["pv.exe (m0)"], target: nodes["juu.exe (m0)"], type: "defaultedge"},
+{source: nodes["vp.exe (m0)"], target: nodes["gty.exe (m0)"], type: "defaultedge"},
+{source: nodes["be.exe (m1)"], target: nodes["http://npr.org/y/"], type: "defaultedge"},
+{source: nodes["rd.exe (m1)"], target: nodes["juu.exe (m1)"], type: "defaultedge"},
+{source: nodes["a.exe (m11)"], target: nodes["hi.exe (m11)"], type: "defaultedge"},
+{source: nodes["a.exe (m11)"], target: nodes["l.exe (m11)"], type: "defaultedge"},
+{source: nodes["a.exe (m11)"], target: nodes["mor.exe (m11)"], type: "defaultedge"},
+{source: nodes["f.exe (m11)"], target: nodes["ugge.exe (m11)"], type: "defaultedge"},
+{source: nodes["mor.exe (m11)"], target: nodes["http://reverso.net/j/gwi/"], type: "defaultedge"},
+{source: nodes["mor.exe (m11)"], target: nodes["http://youporn.com/y/"], type: "defaultedge"},
+{source: nodes["p.exe (m11)"], target: nodes["omv.exe (m11)"], type: "defaultedge"},
+{source: nodes["f.exe (m12)"], target: nodes["http://drom.ru/ka/"], type: "defaultedge"},
+{source: nodes["f.exe (m12)"], target: nodes["ip.exe (m12)"], type: "defaultedge"},
+{source: nodes["f.exe (m12)"], target: nodes["juu.exe (m12)"], type: "defaultedge"},
+{source: nodes["f.exe (m13)"], target: nodes["http://media.tumblr.com/sf/"], type: "defaultedge"},
+{source: nodes["ftvd.exe (m13)"], target: nodes["env.exe (m13)"], type: "defaultedge"},
+{source: nodes["ftvd.exe (m13)"], target: nodes["http://xbox.com/kn/"], type: "defaultedge"},
+{source: nodes["ftvd.exe (m13)"], target: nodes["p.exe (m13)"], type: "defaultedge"},
+{source: nodes["k.exe (m13)"], target: nodes["wlhb.exe (m13)"], type: "defaultedge"},
+{source: nodes["wlhb.exe (m13)"], target: nodes["djni.exe (m13)"], type: "defaultedge"},
+{source: nodes["wlhb.exe (m13)"], target: nodes["ftvd.exe (m13)"], type: "defaultedge"},
+{source: nodes["wlhb.exe (m13)"], target: nodes["http://youm7.com/oboa/bafe/rt/"], type: "defaultedge"},
+{source: nodes["wlhb.exe (m13)"], target: nodes["http://youporn.com/y/"], type: "defaultedge"},
+{source: nodes["wlhb.exe (m13)"], target: nodes["qy.exe (m13)"], type: "defaultedge"},
+{source: nodes["x.exe (m13)"], target: nodes["irp.exe (m13)"], type: "defaultedge"},
+{source: nodes["bns.exe (m14)"], target: nodes["omv.exe (m14)"], type: "defaultedge"},
+{source: nodes["http://ria.ru/kycr/"], target: nodes["mor.exe (m14)"], type: "defaultedge"},
+{source: nodes["mor.exe (m14)"], target: nodes["i.exe (m14)"], type: "defaultedge"},
+{source: nodes["mor.exe (m14)"], target: nodes["wylt.exe (m14)"], type: "defaultedge"},
+{source: nodes["o.exe (m14)"], target: nodes["gty.exe (m14)"], type: "defaultedge"},
+{source: nodes["ckq.exe (m15)"], target: nodes["g.exe (m15)"], type: "defaultedge"},
+{source: nodes["ckq.exe (m15)"], target: nodes["http://ce.cn/gc/"], type: "defaultedge"},
+{source: nodes["ckq.exe (m15)"], target: nodes["lt.exe (m15)"], type: "defaultedge"},
+{source: nodes["http://etao.com/dvk/e/"], target: nodes["ckq.exe (m15)"], type: "defaultedge"},
+{source: nodes["http://offpageads.com/nvty/"], target: nodes["wwz.exe (m16)"], type: "defaultedge"},
+{source: nodes["q.exe (m16)"], target: nodes["http://alipay.com/s/"], type: "defaultedge"},
+{source: nodes["axxt.exe (m17)"], target: nodes["omv.exe (m17)"], type: "defaultedge"},
+{source: nodes["f.exe (m17)"], target: nodes["http://soso.com/rh/"], type: "defaultedge"},
+{source: nodes["gty.exe (m17)"], target: nodes["qnf.exe (m17)"], type: "defaultedge"},
+{source: nodes["http://change.org/tw/"], target: nodes["uile.exe (m17)"], type: "defaultedge"},
+{source: nodes["jc.exe (m17)"], target: nodes["axxt.exe (m17)"], type: "defaultedge"},
+{source: nodes["sqv.exe (m17)"], target: nodes["gty.exe (m17)"], type: "defaultedge"},
+{source: nodes["uile.exe (m17)"], target: nodes["iccz.exe (m17)"], type: "defaultedge"},
+{source: nodes["uile.exe (m17)"], target: nodes["icsm.exe (m17)"], type: "defaultedge"},
+{source: nodes["hrdy.exe (m18)"], target: nodes["http://enet.com.cn/qni/"], type: "defaultedge"},
+{source: nodes["hrdy.exe (m18)"], target: nodes["http://snapdeal.com/x/tr/"], type: "defaultedge"},
+{source: nodes["hrdy.exe (m18)"], target: nodes["qnf.exe (m18)"], type: "defaultedge"},
+{source: nodes["http://ebates.com/gl/mntl/d/"], target: nodes["qqna.exe (m18)"], type: "defaultedge"},
+{source: nodes["o.exe (m18)"], target: nodes["http://loading-delivery1.com/abf/xs/khgc/k/t/"], type: "defaultedge"},
+{source: nodes["o.exe (m18)"], target: nodes["wwz.exe (m18)"], type: "defaultedge"},
+{source: nodes["qnf.exe (m18)"], target: nodes["xfxo.exe (m18)"], type: "defaultedge"},
+{source: nodes["qqna.exe (m18)"], target: nodes["hrdy.exe (m18)"], type: "defaultedge"},
+{source: nodes["qqna.exe (m18)"], target: nodes["http://google.com.ng/jjpi/"], type: "defaultedge"},
+{source: nodes["gty.exe (m19)"], target: nodes["ckq.exe (m19)"], type: "defaultedge"},
+{source: nodes["http://npr.org/y/"], target: nodes["qnf.exe (m19)"], type: "defaultedge"},
+{source: nodes["kk.exe (m19)"], target: nodes["tmft.exe (m19)"], type: "defaultedge"},
+{source: nodes["qnf.exe (m19)"], target: nodes["ll.exe (m19)"], type: "defaultedge"},
+{source: nodes["tmft.exe (m19)"], target: nodes["gty.exe (m19)"], type: "defaultedge"},
+{source: nodes["a.exe (m20)"], target: nodes["sgxd.exe (m20)"], type: "defaultedge"},
+{source: nodes["http://xda-developers.com/imuv/l/z/"], target: nodes["qnf.exe (m20)"], type: "defaultedge"},
+{source: nodes["qnf.exe (m20)"], target: nodes["http://xywy.com/a/lpv/buoz/"], type: "defaultedge"},
+{source: nodes["qnf.exe (m20)"], target: nodes["irp.exe (m20)"], type: "defaultedge"},
+{source: nodes["p.exe (m21)"], target: nodes["wwz.exe (m21)"], type: "defaultedge"},
+{source: nodes["wwz.exe (m21)"], target: nodes["eci.exe (m21)"], type: "defaultedge"},
+{source: nodes["wwz.exe (m21)"], target: nodes["http://behance.net/uzi/"], type: "defaultedge"},
+{source: nodes["wwz.exe (m21)"], target: nodes["x.exe (m21)"], type: "defaultedge"},
+{source: nodes["ds.exe (m23)"], target: nodes["http://npr.org/y/"], type: "defaultedge"},
+{source: nodes["http://taboola.com/xas/"], target: nodes["omv.exe (m23)"], type: "defaultedge"},
+{source: nodes["i.exe (m23)"], target: nodes["wwz.exe (m23)"], type: "defaultedge"},
+{source: nodes["irp.exe (m23)"], target: nodes["po.exe (m23)"], type: "defaultedge"},
+{source: nodes["pe.exe (m23)"], target: nodes["irp.exe (m23)"], type: "defaultedge"},
+{source: nodes["wwz.exe (m23)"], target: nodes["nr.exe (m23)"], type: "defaultedge"},
+{source: nodes["a.exe (m24)"], target: nodes["http://outbrain.com/qz/"], type: "defaultedge"},
+{source: nodes["a.exe (m24)"], target: nodes["knc.exe (m24)"], type: "defaultedge"},
+{source: nodes["h.exe (m24)"], target: nodes["juu.exe (m24)"], type: "defaultedge"},
+{source: nodes["http://alipay.com/s/"], target: nodes["juu.exe (m24)"], type: "defaultedge"},
+{source: nodes["juu.exe (m24)"], target: nodes["ckq.exe (m24)"], type: "defaultedge"},
+{source: nodes["juu.exe (m24)"], target: nodes["http://google.hu/rd/vcm/xx/"], type: "defaultedge"},
+{source: nodes["juu.exe (m24)"], target: nodes["omv.exe (m24)"], type: "defaultedge"},
+{source: nodes["o.exe (m24)"], target: nodes["http://sbnation.com/cisl/"], type: "defaultedge"},
+{source: nodes["o.exe (m24)"], target: nodes["http://soundcloud.com/pc/"], type: "defaultedge"},
+{source: nodes["o.exe (m24)"], target: nodes["ip.exe (m24)"], type: "defaultedge"},
+{source: nodes["ch.exe (m26)"], target: nodes["omv.exe (m26)"], type: "defaultedge"},
+{source: nodes["a.exe (m28)"], target: nodes["pab.exe (m28)"], type: "defaultedge"},
+{source: nodes["a.exe (m28)"], target: nodes["qpxa.exe (m28)"], type: "defaultedge"},
+{source: nodes["daiw.exe (m28)"], target: nodes["tem.exe (m28)"], type: "defaultedge"},
+{source: nodes["o.exe (m28)"], target: nodes["daiw.exe (m28)"], type: "defaultedge"},
+{source: nodes["o.exe (m28)"], target: nodes["http://globososo.com/czfc/zfmi/"], type: "defaultedge"},
+{source: nodes["o.exe (m3)"], target: nodes["o.exe (m3)"], type: "defaultedge"},
+{source: nodes["http://ensonhaber.com/uou/k/"], target: nodes["juu.exe (m5)"], type: "defaultedge"},
+{source: nodes["d.exe (m6)"], target: nodes["mor.exe (m6)"], type: "defaultedge"},
+{source: nodes["mor.exe (m6)"], target: nodes["q.exe (m6)"], type: "defaultedge"},
+{source: nodes["orw.exe (m7)"], target: nodes["wwz.exe (m7)"], type: "defaultedge"},
+{source: nodes["f.exe (m9)"], target: nodes["http://google.co.id/x/"], type: "defaultedge"},
+{source: nodes["f.exe (m9)"], target: nodes["http://mozilla.org/yib/nep/"], type: "defaultedge"},
+{source: nodes["f.exe (m9)"], target: nodes["nywm.exe (m9)"], type: "defaultedge"},
+{source: nodes["f.exe (m9)"], target: nodes["uile.exe (m9)"], type: "defaultedge"},
+{source: nodes["nywm.exe (m9)"], target: nodes["vl.exe (m9)"], type: "defaultedge"},
+{source: nodes["o.exe (m9)"], target: nodes["km.exe (m9)"], type: "defaultedge"},
+{source: nodes["o.exe (m9)"], target: nodes["mon.exe (m9)"], type: "defaultedge"}
+];
+
+var width = 960,
+    height = 500;
+
+var force = d3.layout.force()
+    .nodes(d3.values(nodes))
+    .links(links)
+    .size([width, height])
+    .linkDistance(60)
+    .charge(-300)
+    .on("tick", tick)
+    .start();
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// Per-type markers, as they don't inherit styles.
+svg.append("defs").selectAll("marker")
+    .data(["defaultedge"])
+  .enter().append("marker")
+    .attr("id", function(d) { return d; })
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 15)
+    .attr("refY", -1.5)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")
+  .append("path")
+    .attr("d", "M0,-5L10,0L0,5");
+
+var path = svg.append("g").selectAll("path")
+    .data(force.links())
+  .enter().append("path")
+    .attr("class", function(d) { return "link " + d.type; })
+    .attr("marker-end", function(d) { return "url(#" + d.type + ")"; });
+
+var circle = svg.append("g").selectAll("circle")
+    .data(force.nodes())
+  .enter().append("circle")
+    .attr("r", 9)
+    .call(force.drag)
+    .style("fill", function(d) { return d.color; } );
+
+var text = svg.append("g").selectAll("text")
+    .data(force.nodes())
+  .enter().append("text")
+    .attr("x", 8)
+    .attr("y", ".31em")
+    .text(function(d) { return d.name; });
+
+// Use elliptical arc path segments to doubly-encode directionality.
+function tick() {
+  path.attr("d", linkArc);
+  circle.attr("transform", transform);
+  text.attr("transform", transform);
+}
+
+function linkArc(d) {
+  var dx = d.target.x - d.source.x,
+      dy = d.target.y - d.source.y,
+      dr = Math.sqrt(dx * dx + dy * dy);
+  return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+}
+
+function transform(d) {
+  return "translate(" + d.x + "," + d.y + ")";
+}
+
+</script>
+</body>
+</html>
